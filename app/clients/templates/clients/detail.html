@@ -1,0 +1,60 @@
+{% extends "partial/card_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Detalhe Cliente{% endblock %}
+
+{% block lead %}Detalhe de Cliente{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block card_content %}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title mb-4">{{ object.get_primary_domain }}</h4>
+        <p>Usuário: {{ object.user.email }}</p>
+        <p>Criado em: {{ object.created_at|date }}</p>
+        <p>Atualizado em: {{ object.updated_at|date }}</p>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="mt-2">
+            <h5 class="font-size-14 mb-3">Aplicar Cupom:</h5>
+
+            <form method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="input-group">
+                        <input type="hidden" class="form-control" name="action" value="redeem_coupon">
+                        <div class="input-group-text"><i class="bx bxs-coupon font-size-16"></i></div>
+                        <input type="text" class="form-control" name="{{ form.coupon_code.html_name }}" placeholder="Código">
+                        <button type="submit" class="btn btn-info">Aplicar</a>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="mt-2">
+            <h5 class="font-size-14 mb-3">Gerar mensalidade:</h5>
+
+            <form method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <input type="hidden" class="form-control" name="action" value="generate_monthly">
+                    <button type="submit" class="btn btn-info">Aplicar</a>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

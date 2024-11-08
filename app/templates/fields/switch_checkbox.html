@@ -1,0 +1,4 @@
+    <div class="form-check form-switch mb-3" dir="ltr">
+        <input type="{{ widget.type }}" class="form-check-input" name="{{ widget.name }}"{% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}{% include "django/forms/widgets/attrs.html" %}>
+        <label class="custom-control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+    </div>

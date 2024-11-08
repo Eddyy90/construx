@@ -1,0 +1,29 @@
+{% extends "partial/card_base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Formulário - Usuário{% endblock %}
+
+{% block lead %}{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block card_content %}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title mb-4">Personificação de Perfil</h4>
+        <p>Deixe o campo vazio para despersonificar</p>
+
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ form.profile | as_crispy_field }}
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrajavascript %}
+    <script src="/static/libs/select2/js/select2.min.js"></script>
+    <script>$('.card select').select2();</script>
+{% endblock %}

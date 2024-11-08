@@ -1,0 +1,199 @@
+{% extends "partial/card_base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% load file_tags %}
+
+{% block title %}Formulário - Documento{% endblock %}
+
+{% block lead %}{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block card_content %}
+<!-- PAGE-HEADER -->
+<div class="page-header">
+    <h1 class="page-title">Arquivos Anexados</h1>
+    <div>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">{{ document.identifier }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Anexos</li>
+        </ol>
+    </div>
+</div>
+<!-- PAGE-HEADER END -->
+
+<div class="row">
+</div>
+
+<div class="row row-sm">
+    <div class="col-lg-12 col-xl-12">
+        <div class="hide">
+            <form action="{% url 'document:add_model' document.id %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            </form>
+        </div>
+        <div class="row row-sm">
+            {% for model in models %}
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xxl-2">
+                <div class="model-card card overflow-hidden" data-model-id="{{ model.id }}">
+                    <a href="#"><img src="{% static '/assets/images/pngs/4.jpg' %}" alt="img" class="file-manager-list w-100"></a>
+                    <div class="card-footer">
+                        <div class="d-flex">
+                            <div class="">
+                                <h5 class="mb-0 fw-semibold text-break">{{ model.name }}</h5>
+                            </div>
+                            <div class="ms-auto my-auto">
+                                <span class="text-muted mb-0">{{ model.type_display }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="row row-sm">
+    <div class="col-md-5 col-lg-5 col-xl-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <button class="btn btn-success waves-effect waves-light mb-2" data-bs-toggle="modal" data-bs-target="#modalFiles">
+                    Adicionar
+                </button>
+                <p class="text-muted pt-2">Total de {{ files_quantity }} arquivos</p>
+            </div>
+
+            {% if file_data_list %}
+            <div class="card-body pt-4">
+                <div class="list-group list-group-transparent mb-0 file-manager">
+                    {% for mimetype, file_data in file_data_list %}
+                    <div class="d-flex">
+                        <div>
+                            <a href="javascript:void(0);" class="list-group-item d-flex align-items-center px-0">
+                                {% if mimetype == 'image' %}
+                                <i class="fe fe-image fs-18 me-2 text-success p-2"></i>Imagens
+                                {% elif mimetype == 'video' %}
+                                <i class="fe fe-video fs-18 me-2 text-secondary p-2"></i>Vídeos
+                                {% elif mimetype == 'document' %}
+                                <i class="fe fe-file-text fs-18 me-2 text-primary p-2"></i> Docs
+                                {% elif mimetype == 'audio' %}
+                                <i class="fe fe-music fs-18 me-2 text-warning p-2"></i> Áudios
+                                {% elif mimetype == 'zip' %}
+                                <i class="fe fe-download fs-18 me-2 text-info p-2"></i> ZIPs
+                                {% else %}
+                                <i class="fe fe-grid fs-18 me-2 text-danger p-2"></i> Outros
+                                {% endif %}
+                            </a>
+                        </div>
+
+                        <div class="text-end ms-auto mt-3">
+                            <span class="fs-11  text-dark">{{ file_data.size }} kbytes</span>
+                        </div>
+                    </div>
+                    <div class="progress progress-xs mb-3 ms-2">
+                        <div class="progress-bar {{ file_data.bg_color.color }}" style="width: {{ file_data.size_percentage|stringformat:".2f" }}%;"></div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+
+    <div class="col-md-7 col-lg-7 col-xl-9">
+        <div class="row row-sm">
+            <div class="col-sm-12 col-md-12">
+                <div class="card">
+                    <div class="card-body pb-0">
+                        <form method="GET"  action="">
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control" name="q" placeholder="Pesquisar por termo..." value={{ query }}>
+                                <button type="submit" class="input-group-text btn btn-primary">Pesquisar</button>
+                            </div>
+                            <div class="tabs-menu search-tabs">
+                                <ul class="nav panel-tabs">
+                                    {% for key, type in exib_types.items %}
+                                    <li>
+                                        <input type="radio" class="btn-check" name="type" id="type_{{ key}}" value="{{ key }}" onchange="this.form.submit()" {% if type_filter == key %}checked{% endif %}>
+                                        <a class="text-dark {% if type_filter == key %}active{% endif %}">
+                                            <label for="type_{{ key}}" class="mb-0">{{ type }}</label>
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-body p-3">
+                        <p class="text-muted pt-2">Total de {{ files_quantity }} arquivos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row row-sm">
+            <div class="text-dark mb-2 ms-1 fs-20 fw-semibold">Arquivos</div>
+            {% for value in files %}
+            <div class="col-xl-3 col-md-6 col-sm-6 ">
+                <div class="card pos-relative ">
+                    <a href="{% url 'document:files:detail' document.id value.id %}"class="open-file"></a>
+                    <div class="card-body px-4 pt-4 pb-2">
+                        <div class="d-flex " >
+                            <span class="{% get_file_colors value.file_type 'card' %} border {% get_file_colors value.file_type 'border' %} brround">
+                                <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                                    <path fill="{% get_file_colors value.file_type 'fill' %}" d="M9.3 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4H10L12 6H20C21.1 6 22 6.9 22 8V14.6C20.6 13.6 18.9 13 17 13C13.5 13 10.4 15.1 9.1 18.3L8.8 19L9.1 19.7C9.2 19.8 9.2 19.9 9.3 20M23 19C22.1 21.3 19.7 23 17 23S11.9 21.3 11 19C11.9 16.7 14.3 15 17 15S22.1 16.7 23 19M19.5 19C19.5 17.6 18.4 16.5 17 16.5S14.5 17.6 14.5 19 15.6 21.5 17 21.5 19.5 20.4 19.5 19M17 18C16.4 18 16 18.4 16 19S16.4 20 17 20 18 19.6 18 19 17.6 18 17 18" />
+                                </svg>
+                            </span>
+                            <div class="ms-auto mt-1 file-dropdown">
+                                <a href="javascript:void(0)" class="text-muted" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical fs-18"></i></a>
+                                <div class="dropdown-menu dropdown-menu-start">
+                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-edit me-2"></i> Editar</a>
+                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-share me-2"></i> Compartilhar</a>
+                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-download me-2"></i> Baixar</a>
+                                    <a class="dropdown-item" href="javascript:void(0)"><i class="fe fe-trash me-2"></i> Deletar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="card-footer">
+                            <div class="d-flex">
+                                <div class="">
+
+                                    <h5 class="mb-0 fw-semibold text-break"> {{ value.file_name }} </h5>
+                                </div>
+                                <div class="ms-auto my-auto mt-3">
+                                    <span class="text-muted mb-0"> {{ value.file.size|bytes_to_kb }} kbs </span>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!--------  modal -------->
+<div class="modal fade" id="modalFiles" tabindex="-1" aria-labelledby="modalFilesLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-group-mt" enctype="multipart/form-data" action="{% url 'document:files:add_to_partial' document.id %}" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalFilesLabel">Adicionar Arquivo</h5>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <h5 class="font-size-16">Insira as informações</h5>
+                    {% crispy file_form %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>    
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock card_content %}

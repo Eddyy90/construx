@@ -1,0 +1,45 @@
+{% extends "partial/card_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Formulário - Evento{% endblock %}
+
+{% block lead %}{% endblock %}
+{% block breadcrumb %}
+<ol class="breadcrumb m-0">
+    <li class="breadcrumb-item"><a href="{% url 'calendars:list' %}">Eventos</a></li>
+    {% if object %}
+    <li class="breadcrumb-item"><a href="{% url 'calendars:detail' object.pk %}">{{ object }}</a></li>
+    <li class="breadcrumb-item active">Editar</li>
+    {% else %}
+    <li class="breadcrumb-item active">Cadastrar</li>
+    {% endif %}
+</ol>
+{% endblock %}
+
+{% block card_content %}
+<div class="card">
+    <div class="card-header">
+        {% if object %}
+            <h3 class="card-title">Editar Evento</h3>
+        {% else %}
+            <h3 class="card-title">Cadastrar Evento</h3>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="row">
+                {% for field in form %}
+                    <div class="col-lg-6">
+                        <div class="mb-3">
+                            {{ field|as_crispy_field }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

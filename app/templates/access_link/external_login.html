@@ -1,0 +1,65 @@
+{% extends "partial/clean_base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}Acesso a Inquérito{% endblock %}
+{% block body_class %}background-auth{% endblock %}
+{% block base_content %}
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="card">
+                            {% if has_expired %}
+                            <div class="card-body p-4">
+                                <div class="text-center mt-2">
+                                    <h5 class="text-primary">Olá</h5>
+                                    <p class="text-muted">
+                                        Esse link não está mais disponível.
+                                        <br/>
+                                        Consulte o escritório do sistema para criação de novo link.
+                                    </p>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="card-body p-4">
+                                <div class="text-center mt-2">
+                                    <h5 class="text-primary">Bem-vindo</h5>
+                                    <p class="text-muted">Informe seus dados para continuar.</p>
+                                </div>
+                                <div class="p-2 mt-4">
+                                    <form action="" method="POST">
+                                        {% csrf_token %}
+                                        {% for message in messages %}
+                                        <div class="alert alert-danger" role="alert">
+                                            <strong>{{message}}</strong>
+                                        </div>
+                                        {% endfor %}
+
+                                        <div class="mb-3">
+                                            {{ form.name | as_crispy_field}}
+                                        </div>
+
+                                        <div class="mb-3">
+                                            {{ form.id_registry | as_crispy_field}}
+                                        </div>
+
+                                        <div class="mt-3 text-end">
+                                            {% if redirect_field_value %}
+                                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                                            {% endif %}
+                                            <button class="btn btn-primary w-sm waves-effect waves-light" type="submit">Entrar</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+    <script src="{% static 'libs/jquery/jquery.min.js' %}"></script>
+    <!-- form mask -->
+    <script src="{% static 'libs/inputmask/min/jquery.inputmask.bundle.min.js' %}"></script>
+    <!-- form mask init -->
+    <script src="{% static 'js/form-mask.init.js' %}"></script>
+{% endblock %}

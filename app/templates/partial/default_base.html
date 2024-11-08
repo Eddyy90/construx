@@ -1,0 +1,29 @@
+{% extends "partial/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block preloader %}
+{% endblock %}
+
+
+{% block rightsidebar %}
+{% endblock %}
+
+{% block content %}
+<!--app-content open-->
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+        {% block main_content %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+    {% include 'partial/footer.html' %}
+{% endblock %}
+
+{% block javascript %}
+    {% include 'partial/javascript.html' %}
+    {% block extrajavascript %}{% endblock %}
+{% endblock %}

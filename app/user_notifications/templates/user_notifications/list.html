@@ -1,0 +1,88 @@
+{% extends "partial/card_base.html" %}
+
+{% block title %}Notificações de Usuários{% endblock %}
+
+{% block lead %}{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb m-0">
+    <li class="breadcrumb-item"><a href="{% url 'user_notifications:list' %}">Notificações de Usuários</a></li>
+    <li class="breadcrumb-item active">Listagem</li>
+</ol>
+{% endblock %}
+
+{% block card_content %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Lista de Notificações de Usuários</h3>
+        <div class="card-header-actions ms-auto">
+            {% if perms.user_notifications.add_usernotification %}
+            <a href="{% url 'user_notifications:create' %}" class="btn btn-sm btn-success">
+                Adicionar
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered text-nowrap border-bottom responsive-datatable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Estado Atual</th>
+                        <th>Descrição</th>
+                        <th>Destinatário</th>
+                        <th>Menssagem</th>
+                        <th>Data/Hora</th>
+                        <th>Não Visualizada</th>
+                        <th>Links</th>
+                        <th>Conteúdo</th>
+                        <th>Departamento Alvo</th>
+                        <th style="width: 1%;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usernotification in user_notifications %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'user_notifications:detail' usernotification.pk %}" class="text-body fw-bold">{{usernotification.pk}}</a>
+                        </td>
+                        <td>{{usernotification.level}}</td>
+                        <td>{{usernotification.description}}</td>
+                        <td>{{usernotification.recipient}}</td>
+                        <td>{{usernotification.verb}}</td>
+                        <td>{{usernotification.timestamp}}</td>
+                        <td>{{usernotification.unread|yesno}}</td>
+                        <td>{{usernotification.data}}</td>
+                        <td>{{usernotification.target}}</td>
+                        <td>{{usernotification.action_object}}</td>
+                        <td>
+                            <div>
+
+                            {% if perms.user_notifications.view_usernotification %}
+                            <a href="{% url 'user_notifications:detail' usernotification.pk %}" class="btn btn-primary btn-sm">
+                                Ver Detalhes
+                            </a>
+                            {% endif %}
+                            {% if perms.user_notifications.change_usernotification %}
+                            <a href="{% url 'user_notifications:edit' usernotification.pk %}" class="btn btn-warning btn-sm">
+                                Editar
+                            </a>
+                            {% endif %}
+                            {% if perms.user_notifications.delete_usernotification %}
+                            <a href="{% url 'user_notifications:remove' usernotification.pk %}" class="btn btn-danger btn-sm">
+                                Remover
+                            </a>
+                            {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- end card -->
+{% endblock %}
+

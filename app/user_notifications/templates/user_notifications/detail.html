@@ -1,0 +1,33 @@
+{% extends "partial/card_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Detalhes de Notificação de Usuário{% endblock %}
+
+{% block lead %}{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb m-0">
+    <li class="breadcrumb-item"><a href="{% url 'user_notifications:list' %}">Notificações de Usuários</a></li>
+    <li class="breadcrumb-item active">{{ object }}</li>
+</ol>
+{% endblock %}
+
+{% block card_content %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">{{ object }}</h3>
+        <div class="card-header-actions ms-auto">
+            {% if perms.user_notifications.change_usernotification %}
+            <a href="{% url 'user_notifications:edit' usernotification.pk %}" class="btn btn-sm btn-warning">
+                Editar
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card-body">
+        <p>Descrição: {{ object.description }}</p>
+        <p>Criado em: {{ object.created_at|date }}</p>
+        <p>Atualizado em: {{ object.updated_at|date }}</p>
+    </div>
+</div>
+{% endblock %}

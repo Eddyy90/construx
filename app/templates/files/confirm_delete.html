@@ -1,0 +1,28 @@
+{% extends "partial/card_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Remover Documento{% endblock %}
+
+{% block lead %}{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block card_content %}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title mb-4">Remover Documento</h4>
+
+        <form id="user-form" method="POST" action="">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        <p>Tem certeza que deseja remover "{{ object }}"?</p>
+                        <button type="submit" class="btn btn-primary">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

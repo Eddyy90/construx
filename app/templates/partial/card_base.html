@@ -1,0 +1,13 @@
+{% extends "partial/row_base.html" %}
+{% load crispy_forms_tags %}
+   
+
+{% block row_content %}
+<div class="row">
+    <div class="col-lg-12">
+        {% block card_content %}{% endblock %}
+    </div>
+    <!-- end col -->
+</div>
+<!-- end row -->
+{% endblock %}

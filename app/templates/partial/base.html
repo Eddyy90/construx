@@ -1,0 +1,62 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en" >
+
+<head>
+
+    <meta charset="utf-8" />
+    <title>{% block title %}{% endblock %} | {{ branding.name }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Atendimento Clínica" />
+    <!-- FAVICON -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ branding.icon }}"/>
+
+
+    {% block css %}
+		{% include 'partial/css.html' %}
+    {% endblock %}
+
+</head>
+
+<body class="app sidebar-mini ltr light-mode">
+
+    <!-- GLOBAL-LOADER -->
+    <div id="global-loader">
+        <img src="{% static '/assets/images/loader.svg' %}" class="loader-img" alt="Loader">
+    </div>
+    <!-- /GLOBAL-LOADER -->
+
+
+<div id="layout-wrapper">
+<!-- ==================================================================-->
+                         <!-- VERTICAL LAYOUT HEADER & SIDEBAR-->
+<!-- ==================================================================-->
+ {% block header %}
+{% include 'partial/header.html' %}
+{% endblock %}
+{% block sidebar %}
+{% include 'partial/sidebar.html' %}
+{% endblock %}
+
+<!-- ==================================================================-->
+                         <!-- HORIZONTAL LAYOUT HEADER-->
+<!-- ==================================================================-->
+{% comment %} {% block header %}
+ {% include 'partial/hori-header.html' %}
+{% endblock %}   {% endcomment %}
+
+{% block content %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+
+{% block rightsidebar %}
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
+</body>
+</html>

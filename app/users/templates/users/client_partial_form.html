@@ -1,0 +1,104 @@
+{% load crispy_forms_tags %}
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="mb-3">
+            {{client_profile_form.id_registry_type|as_crispy_field}}
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="mb-3">
+            {{client_profile_form.id_registry|as_crispy_field}}
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="mb-3">
+            {{client_form.first_name|as_crispy_field}}
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="mb-3">
+            {{client_profile_form.social_name|as_crispy_field}}
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="mb-3">
+            {{client_form.email|as_crispy_field}}
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="mb-3">
+            {{client_profile_form.phone_number|as_crispy_field}}
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="mb-3">
+            {{client_profile_form.site_url|as_crispy_field}}
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="mb-3">
+            {{client_profile_form.initials|as_crispy_field}}
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="mb-3">
+            {{client_profile_form.responsible_name|as_crispy_field}}
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="mb-3">
+            {{client_profile_form.responsible_signature|as_crispy_field}}
+        </div>
+    </div>
+</div>
+<br>
+{% if client_address_form %}
+<div>
+    {% comment %}
+    <div class="col-lg-12">
+        <div class="mb-3">
+            {{client_profile_form.digital|as_crispy_field}}
+        </div>
+    </div>
+    {% endcomment %}
+    <div id="address" class="row">
+        <div class="col-lg-6">
+            <div class="mb-3">
+                {{client_address_form.zipcode|as_crispy_field}}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="mb-3">
+                {{client_address_form.state|as_crispy_field}}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="mb-3">
+                {{client_address_form.city|as_crispy_field}}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="mb-3">
+                {{client_address_form.district|as_crispy_field}}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="mb-3">
+                {{client_address_form.street|as_crispy_field}}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="mb-3">
+                {{client_address_form.number|as_crispy_field}}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="mb-3">
+                {{client_address_form.complement|as_crispy_field}}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}

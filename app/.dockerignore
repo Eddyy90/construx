@@ -1,0 +1,4 @@
+*.md
+buildDocker*
+theme/*
+media/*

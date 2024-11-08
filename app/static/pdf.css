@@ -1,0 +1,164 @@
+p {
+    line-height: 24px;
+}
+
+p div {
+    display: inline;
+}
+
+body {
+    font-family: Times New Roman, Times, serif;
+    font-size: 16px;
+}
+
+ul ol {
+    line-height: 24px;
+}
+
+li{
+    line-height: 24px;
+    word-break: break-all;
+    line-break: normal;
+}
+
+li p {
+    display: inline;
+}
+
+.page {
+    page-break-after: always;
+}
+
+.cover-bottom-info {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@page {
+    /* size: {{ pagesize }}; */
+    margin: 2.5cm 3cm;
+
+    @frame footer {
+        -pdf-frame-content: footer_content;
+        bottom: -3cm;
+        margin-left: 3cm;
+        margin-right: 3cm;
+        height: 1cm;
+    }
+
+    @frame content_frame {
+        margin: 3cm 2cm;
+    }
+
+    @top-left {
+        content: element(header_content);
+    }
+
+    @top-right {
+        content: element(header_content_right);
+    }
+
+    @bottom-center {
+        content: "Página " counter(page-counter);
+        margin-top: 1.5cm;
+        font-size: 10px;
+    }
+}
+
+@page embed {
+    background: none;
+    margin: 0;
+    margin-bottom: 2cm;
+    @top-left { content: none }
+    @top-center { content: none }
+    @top-right { content: none }
+}
+
+.embed-page {
+    page: embed;
+}
+
+.embed-page .embed-image {
+    text-align: center;
+    max-height: 22cm;
+    max-width: 19cm;
+}
+
+#header_content {
+    position: fixed;
+    top: -2cm;
+    font-size: 13px;
+    border-bottom: 1px dashed #837f8b;
+    width: 100%;
+}
+
+#header_content_right {
+    position: fixed;
+    top: -2cm;
+    right: -10cm;
+    font-size: 13px;
+    width: 100%;
+}
+
+#footer_content {
+    position: fixed;
+    bottom: -1.8cm;
+    left: 9cm;
+    font-size: 13px;
+    vertical-align: middle;
+    width: 210mm;
+
+}
+
+#footer_content_left {
+    position: fixed;
+    bottom: -1.8cm;
+    left: 1cm;
+    font-size: 13px;
+    vertical-align: middle;
+    width: 210mm;
+    border-top: 1px dashed #837f8b;
+    max-height: 2cm;
+
+}
+
+@page {
+    counter-reset: footnote 0;
+    counter-increment: page-counter 1;
+}
+
+@page {
+    @footnote {
+        border-top: dashed grey 1px;
+        float: bottom;
+    }
+}
+
+span.footnote {
+    float: footnote;
+    font-family: Times New Roman, Times, serif;
+    font-size: 12px;
+    text-align: justify;
+    text-justify: inter-word;
+    text-indent: 0;
+    font-weight: normal;
+}
+
+::footnote-call {
+    content: counter(footnote);
+    font-variant-position: super;
+    color: blue;
+}
+
+.footnote::footnote-marker {
+    text-indent: 0;
+    content: counter(footnote) '. ';
+    font-size: 14pt;
+    color: red;
+    display: inline-block;
+    width: 2em;
+    padding-right: 1em;
+    text-align: right;
+}

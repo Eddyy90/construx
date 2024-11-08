@@ -1,0 +1,16 @@
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Detalhes do Evento</h5>
+        </div>
+        <div class="card-body">
+            <p>Descrição: {{ event.description }}</p>
+            <p>Criado em: {{ event.created_on|date }}</p>
+            <p>Atualizado em: {{ event.updated_on|date }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>

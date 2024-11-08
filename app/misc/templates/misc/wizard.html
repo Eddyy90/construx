@@ -1,0 +1,176 @@
+{% extends "partial/card_base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Wizard{% endblock %}
+
+{% block lead %}
+Primeiro acesso
+{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb m-0">
+    <li class="breadcrumb-item"><a href="javascript: void(0);">Menu</a></li>
+    <li class="breadcrumb-item active">Wizard</li>
+</ol>
+{% endblock %}
+
+{% block card_content %}
+<div class="card">
+    <div class="card-body">
+        <!-- <h4 class="card-title mb-4">Primeiro acesso</h4> -->
+
+        <div id="user-wizard" class="wizard">
+            <h3>Dados do sistema (obrigatório)</h3>
+            <section>
+                <form id="client-form" method="POST" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_id" value="client_form" />
+                    {% include 'users/client_partial_form.html' %}
+                    <button type="submit" class="btn btn-success">Enviar</button>
+                </form>
+            </section>
+
+            <h3>Usuários</h3>
+            <section>
+                <form id="user-form" method="POST" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_id" value="user_form" />
+                    {% include 'users/partial_form.html' %}
+                    <button type="submit" class="btn btn-success">Adicionar</button>
+                </form>
+            </section>
+
+            <h3>Confirmar</h3>
+            <section>
+                <div class="row" id="section-to-print">
+                    <div class="col-lg-6">
+                        <div class="text-left">
+                            <div class="mb-4">
+                            </div>
+                            <div>
+                                <h5>
+                                    Confirmar Informações
+                                    <i class="mdi mdi-check-circle-outline text-success display-8"></i>
+                                </h5>
+                                <p class="text-muted">Sua conta está pronta para usar nossa plataforma</p>
+                                <p class="mb-1">Usuários:</p>
+                                <ul>
+                                {% for user in users %}
+                                    <li>
+                                        <a href="{% url 'users:detail' user.user_id %}" class="font-size-16">
+                                            {{ user.user.first_name|default_if_none:"Sem nome" }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                                </ul>
+
+                                {% if client_profile %}
+                                <div class="table-responsive mt-4">
+                                    <div>
+                                        <p class="mb-1">Nome:</p>
+                                        <h5 class="font-size-16">
+                                            {{ client_form.first_name.value|default_if_none:"" }}
+                                        </h5>
+                                    </div>
+                                    <div class="mt-4">
+                                        <p class="mb-1">Email:</p>
+                                        <h5 class="font-size-16">
+                                            {{ client_form.email.value|default_if_none:"" }}
+                                        </h5>
+                                    </div>
+                                    <div class="mt-4">
+                                        <p class="mb-1">CPF:</p>
+                                        <h5 class="font-size-16">
+                                            {{ client_profile_form.document.value|default_if_none:"" }}
+                                        </h5>
+                                    </div>
+                                    <div class="mt-4">
+                                        <p class="mb-1">Telefone:</p>
+                                        <h5 class="font-size-16">
+                                            {{ client_profile_form.phone_number.value|default_if_none:"" }}
+                                        </h5>
+                                    </div>
+                                    {% if client_profile_form.address.value %}
+                                    <div class="mt-4">
+                                        <p class="mb-1">Endereço:</p>
+                                        <h5 class="font-size-16">
+                                            {{ client_profile_form.address.value|default_if_none:"" }}
+                                        </h5>
+                                    </div>
+                                    {% endif %}
+                                    {% if client_profile_form.site_url.value %}
+                                    <div class="mt-4">
+                                        <p class="mb-1">Endereço:</p>
+                                        <h5 class="font-size-16">
+                                            {{ client_profile_form.site_url.value|default_if_none:"" }}
+                                        </h5>
+                                    </div>
+                                    {% endif %}
+                                    <br/>
+                                    <button onclick="window.print()" class="btn btn-primary">Imprimir</button>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<!-- end card -->
+{% endblock %}
+
+{% block extrajavascript %}
+    <!-- jquery step -->
+    <script src="{% static 'assets/plugins/jquery-steps/jquery.steps.min.js' %}"></script>
+    <script>
+    $("#user-wizard").steps({
+        headerTag:"h3",
+        bodyTag:"section",
+        transitionEffect:"slide",
+        startIndex: {{step_index}},
+        onStepChanging: function (event, currentIndex) {
+            if (currentIndex === 0) {
+                {% if profile %}
+                return true;
+                {% else %}
+                $('#client-form').submit();
+                return false;
+                {% endif %}
+            }
+            return true;
+        },
+        labels: {
+            cancel: "Cancelar",
+            current: "passo atual:",
+            pagination: "Paginação",
+            finish: "Finalizar",
+            next: "Próximo",
+            previous: "Anterior",
+            loading: "Carregando..."
+        },
+        onInit: function (event, current) {
+            $('.actions a[href="#finish"]').click(function () {
+                location.assign("{% url 'index' %}");
+            });
+        },
+    });
+    </script>
+
+    <script src="{% static 'js/document_behavior.js' %}"></script>
+    <script>
+        $(function () {
+            const options = {
+                typeEl: $('[name="{{ client_profile_form.id_registry_type.html_name }}"]'),
+                documentEl: $('[name="{{ client_profile_form.id_registry.html_name }}"]'),
+                nameEl: $('[name="{{ client_form.first_name.html_name }}"]'),
+                socialNameEl: $('[name="{{ client_profile_form.social_name.html_name }}"]'),
+            };
+            setupDocumentTypeBehavior(options);
+            updateDocumentType(options);
+        })
+    </script>
+
+{% endblock %}

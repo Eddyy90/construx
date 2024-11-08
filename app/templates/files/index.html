@@ -1,0 +1,81 @@
+{% extends "partial/card_base.html" %}
+
+{% block title %}Documentos{% endblock %}
+
+{% block lead %}{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb m-0">
+    <li class="breadcrumb-item"><a href="{% url 'document:fill' document.id %}">{{document.identifier}}</a></li>
+    <li class="breadcrumb-item"><a href="#">Documentos</a></li>
+    <li class="breadcrumb-item active">Listagem</li>
+</ol>
+{% endblock %}
+
+{% block card_content %}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title mb-4">Lista de Documentos</h4>
+        <a href="{% url 'document:files:create' document.id %}" class="btn btn-success waves-effect waves-light">
+            Adicionar
+        </a>
+        <br />
+        <br />
+        <div class="table-responsive">
+            <table class="table table-centered table-nowrap mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width: 20px;">
+                            <div class="form-check font-size-16">
+                                <input type="checkbox" class="form-check-input" id="customCheck1">
+                                <label class="form-check-label" for="customCheck1">&nbsp;</label>
+                            </div>
+                        </th>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Tipo</th>
+                        <th>Parte de Doc</th>
+                        <th>Hash</th>
+                        <th>Usuário</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in files %}
+                    <tr>
+                        <td>
+                            <div class="form-check font-size-16">
+                                <input type="checkbox" class="form-check-input" id="customCheck2">
+                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                            </div>
+                        </td>
+                        <td><a href="javascript: void(0);" class="text-body fw-bold">{{file.id}}</a> </td>
+                        <td>{{file.name}}</td>
+                        <td>{{file.mimetype}}</td>
+                        <td>{{file.partial}}</td>
+                        <td>{{file.hash}}</td>
+                        <td>{{file.user.first_name}}</td>
+                        <td>
+                            <a href="{% url 'document:files:detail' document.id file.id %}" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">
+                                Ver Detalhes
+                            </a>
+                            <a href="{{ file.file.url }}" class="btn btn-info btn-sm btn-rounded" target="_blank">Baixar</a>
+                            {% if file.user_id %}
+                            <a href="{% url 'document:files:edit' document.id file.id %}" class="btn btn-warning btn-sm btn-rounded waves-effect waves-light">
+                                Editar
+                            </a>
+                            <a href="{% url 'document:files:remove' document.id file.id %}" class="btn btn-danger btn-sm btn-rounded waves-effect waves-light">
+                                Remover
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- end table-responsive -->
+    </div>
+</div>
+<!-- end card -->
+{% endblock %}

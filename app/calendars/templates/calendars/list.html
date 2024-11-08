@@ -1,0 +1,78 @@
+{% extends "partial/card_base.html" %}
+
+{% block title %}Eventos{% endblock %}
+
+{% block lead %}{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb m-0">
+    <li class="breadcrumb-item"><a href="{% url 'calendars:list' %}">Eventos</a></li>
+    <li class="breadcrumb-item active">Listagem</li>
+</ol>
+{% endblock %}
+
+{% block card_content %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Lista de Eventos</h3>
+        <div class="card-header-actions ms-auto">
+            {% if perms.calendars.add_event %}
+            <a href="{% url 'calendars:create' %}" class="btn btn-sm btn-success">
+                Adicionar
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered text-nowrap border-bottom responsive-datatable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Inicio</th>
+                        <th>Término</th>
+                        <th style="width: 1%;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in calendars %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'calendars:detail' event.pk %}" class="text-body fw-bold">{{event.pk}}</a>
+                        </td>
+                        <td>{{event.title}}</td>
+                        <td>{{event.description}}</td>
+                        <td>{{event.start}}</td>
+                        <td>{{event.end}}</td>
+                        <td>
+                            <div>
+
+                            {% if perms.calendars.view_event %}
+                            <a href="{% url 'calendars:detail' event.pk %}" class="btn btn-primary btn-sm">
+                                Ver Detalhes
+                            </a>
+                            {% endif %}
+                            {% if perms.calendars.change_event %}
+                            <a href="{% url 'calendars:edit' event.pk %}" class="btn btn-warning btn-sm">
+                                Editar
+                            </a>
+                            {% endif %}
+                            {% if perms.calendars.delete_event %}
+                            <a href="{% url 'calendars:remove' event.pk %}" class="btn btn-danger btn-sm">
+                                Remover
+                            </a>
+                            {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- end card -->
+{% endblock %}
+

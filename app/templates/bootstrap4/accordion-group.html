@@ -1,0 +1,18 @@
+<div class="accordion accordion-highlight mb-3">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                href="#{{ div.css_id }}" aria-expanded="true"
+                data-bs-target="#{{ div.css_id }}" aria-controls="{{ div.css_id }}">
+                {{ div.name }}
+            </button>
+        </h2>
+
+        <div id="{{ div.css_id }}" class="accordion-collapse collapse{% if div.active %} show{% endif %}" role="tabpanel"
+            aria-labelledby="{{ div.css_id }}" data-parent="#{{ div.data_parent }}">
+            <div class="accordion-body">
+                {{ fields|safe }}
+            </div>
+        </div>
+    </div>
+</div>

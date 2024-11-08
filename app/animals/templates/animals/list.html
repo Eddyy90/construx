@@ -1,0 +1,74 @@
+{% extends "partial/card_base.html" %}
+
+{% block title %}Animais{% endblock %}
+
+{% block lead %}{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb m-0">
+    <li class="breadcrumb-item"><a href="{% url 'animals:list' %}">Animais</a></li>
+    <li class="breadcrumb-item active">Listagem</li>
+</ol>
+{% endblock %}
+
+{% block card_content %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Lista de Animais</h3>
+        <div class="card-header-actions ms-auto">
+            {% if perms.animals.add_animal %}
+            <a href="{% url 'animals:create' %}" class="btn btn-sm btn-success">
+                Adicionar
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered text-nowrap border-bottom responsive-datatable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th style="width: 1%;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for animal in animals %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'animals:detail' animal.pk %}" class="text-body fw-bold">{{animal.pk}}</a>
+                        </td>
+                        <td>{{animal.name}}</td>
+                        <td>{{animal.description}}</td>
+                        <td>
+                            <div>
+
+                            {% if perms.animals.view_animal %}
+                            <a href="{% url 'animals:detail' animal.pk %}" class="btn btn-primary btn-sm">
+                                Ver Detalhes
+                            </a>
+                            {% endif %}
+                            {% if perms.animals.change_animal %}
+                            <a href="{% url 'animals:edit' animal.pk %}" class="btn btn-warning btn-sm">
+                                Editar
+                            </a>
+                            {% endif %}
+                            {% if perms.animals.delete_animal %}
+                            <a href="{% url 'animals:remove' animal.pk %}" class="btn btn-danger btn-sm">
+                                Remover
+                            </a>
+                            {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- end card -->
+{% endblock %}
+

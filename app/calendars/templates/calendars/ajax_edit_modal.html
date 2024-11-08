@@ -1,0 +1,27 @@
+{% load crispy_forms_tags %}
+
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <form class="form-group-mt" enctype="multipart/form-data" action="{% url 'calendars:ajax_event_edit' event.id %}" method="post">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0">Editar Evento</h5>
+            </div>
+            <div class="modal-body">
+                {% csrf_token %}
+                <div class="row">
+                    {% for field in form %}
+                        <div class="col-lg-6">
+                            <div class="mb-3">
+                                {{ field|as_crispy_field }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </div>
+        </form>
+    </div>
+</div>

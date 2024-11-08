@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="Camada_1"
+   data-name="Camada 1"
+   viewBox="0 0 682.5 682.5"
+   version="1.1"
+   sodipodi:docname="attachment_placeholder.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview27"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.0593407"
+     inkscape:cx="341.72199"
+     inkscape:cy="340.77801"
+     inkscape:window-width="1920"
+     inkscape:window-height="1000"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Camada_1" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">
+      .cls-1 {
+        fill: #e6e6e6;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #b3b3b3;
+      }
+
+      .cls-3 {
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <rect
+     class="cls-1"
+     width="682.5"
+     height="682.5"
+     id="rect6" />
+  <g
+     id="Layer_1">
+    <g
+       id="_294549632"
+       data-name=" 294549632">
+      <path
+         id="_294545888"
+         data-name=" 294545888"
+         class="cls-3"
+         d="M500.54,671.54V399.62H222.73v282.63H500.53v-10.71h.02Zm-198.27-236.22c10.48,0,19.98,4.25,26.85,11.12,6.87,6.87,11.12,16.36,11.12,26.85s-4.25,19.98-11.12,26.85c-6.87,6.87-16.36,11.12-26.85,11.12s-19.98-4.25-26.85-11.12c-6.87-6.87-11.12-16.36-11.12-26.85s4.25-19.98,11.12-26.85c6.87-6.87,16.36-11.12,26.85-11.12Zm46.66,103.77l18.31,27.59,21.82-37.81,10.41-18.03,9.24,18.59,48.22,96.92,8.04,16.17h-192.64l9.31-16.65,48.22-86.1,8.93-15.96,10.13,15.27h0Z" />
+      <path
+         id="_294545840"
+         data-name=" 294545840"
+         class="cls-3"
+         d="M682.25,623.6V167.86H360.93v220.58h150.79v245.87h170.54v-10.71h0ZM405.5,225.02h232.18v22.37h-232.18v-22.37Zm0,58.05h232.18v22.37h-232.18v-22.37Zm0,58.03h232.18v22.37h-232.18v-22.37Z" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,56 @@
+{% extends "partial/row_base.html" %}
+
+
+{% load static %}
+
+{% block title %}Notificações de Usuários{% endblock %}
+
+{% block lead %}{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb m-0">
+    <li class="breadcrumb-item"><a href="{% url 'user_notifications:list' %}">Notificações de Usuários</a></li>
+    <li class="breadcrumb-item active">Listagem</li>
+</ol>
+{% endblock %}
+
+{% block row_content %}
+    <div class="row_content">
+        <div class="row-header">
+            <h3 class="card-title">Timeline de Notificações</h3>
+        </div>
+    <div class="container">
+        <ul class="notification">
+            {% for notification in notifications %}
+                <li>
+                    <div class="notification-time">
+                        <span class="date">{{ notification.timestamp|date:"d M" }}</span>
+                        <span class="time">{{ notification.timestamp|time:"H:i" }}</span>
+                    </div>
+                    <div class="notification-icon">
+                        <a href="javascript:void(0);"></a>
+                    </div>
+                    <div class="notification-time-date mb-2 d-block d-md-none">
+                        <span class="date">{{ notification.timestamp|date:"d M" }}</span>
+                        <span class="time ms-2">{{ notification.timestamp|time:"H:i" }}</span>
+                    </div>
+                    <div class="notification-body">
+                        <div class="media mt-0">
+                            <div class="main-avatar avatar-md online">
+                                <img alt="avatar" class="br-6" src="{% static '/images/user_icon.svg' %}" alt="avatar">
+                            </div>
+                            <div class="media-body">
+                                <h6 class="fs-15 text-dark fw-bold mb-1">{{ notification.actor }}</h6>
+                                <p class="mb-0 fs-13 text-dark">{{ notification.verb }} {{notification.action_object}}</p>
+                            </div>
+                            <div class="notify-time">
+                                <p class="mb-0 text-muted fs-11">{{ notification.timestamp|time:"H:i" }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

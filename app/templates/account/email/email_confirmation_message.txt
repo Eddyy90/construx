@@ -1,0 +1,8 @@
+{% extends "account/email/base_message.txt" %}
+{% load account %}
+{% load i18n %}
+
+{% block content %}{% autoescape off %}{% user_display user as user_display %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Você está recebendo esse e-mail pois alguém informou o seu endereço de email ({{ user_display }}) para criar uma conta na {{ site_domain }}.
+
+Para confirmar que está correto, acesse {{ activate_url }}{% endblocktrans %}{% endautoescape %}{% endblock %}
+

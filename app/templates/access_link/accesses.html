@@ -1,0 +1,58 @@
+{% extends "partial/card_base.html" %}
+
+{% block title %}Links de Acesso{% endblock %}
+
+{% block lead %}{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb m-0">
+    <li class="breadcrumb-item"><a href="javascript: void(0);">Lista de Acessos</a></li>
+    <li class="breadcrumb-item active">Listagem</li>
+</ol>
+{% endblock %}
+
+{% block card_content %}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title mb-4">Lista de Acessos</h4>
+        <div class="table-responsive">
+            <table class="table table-centered table-nowrap mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width: 20px;">
+                            <div class="form-check font-size-16">
+                                <input type="checkbox" class="form-check-input" id="customCheck1">
+                                <label class="form-check-label" for="customCheck1">&nbsp;</label>
+                            </div>
+                        </th>
+                        <th>ID</th>
+                        <th>Nome do Visitante</th>
+                        <th>Documento do Visitante</th>
+                        <th>IP do Visitante</th>
+                        <th>Horário</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for access_link in access_links %}
+                    <tr>
+                        <td>
+                            <div class="form-check font-size-16">
+                                <input type="checkbox" class="form-check-input" id="customCheck2">
+                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                            </div>
+                        </td>
+                        <td><a href="javascript: void(0);" class="text-body fw-bold">{{access_link.id}}</a> </td>
+                        <td>{{access_link.name|default_if_none:'-'}}</td>
+                        <td>{{access_link.document|default_if_none:'-'}}</td>
+                        <td>{{access_link.ip_address|default_if_none:'-'}}</td>
+                        <td>{{access_link.visited_at|default_if_none:'-'}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- end table-responsive -->
+    </div>
+</div>
+<!-- end card -->
+{% endblock %}

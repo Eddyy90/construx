@@ -1,0 +1,97 @@
+{% extends "partial/card_base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Perfil{% endblock %}
+
+{% block lead %}
+Perfil
+{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb m-0">
+    <li class="breadcrumb-item"><a href="javascript: void(0);">Menu</a></li>
+    <li class="breadcrumb-item active">Editar Perfil</li>
+</ol>
+{% endblock %}
+
+{% block card_content %}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title mb-4">Editar Perfil</h4>
+
+        <div id="user-wizard" class="wizard">
+
+            {% if user.is_client %}
+            <section>
+                <form id="user-form" method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_id" value="client_profile_form" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ client_profile_form.image|as_crispy_field }}
+                        </div>
+                    </div>
+                    <br />
+                    <h4>Informações gerais</h4>
+                    {% include 'users/client_partial_form.html' %}
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </section>
+            {% elif user.is_user %}
+            <h4>Usuário</h4>
+            <section>
+                <form id="user-form" method="POST" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_id" value="user_profile_form" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ profile_form.image|as_crispy_field }}
+                        </div>
+                    </div>
+                    <br />
+                    <h4>Informações gerais</h4>
+                    {% include 'users/partial_form.html' %}
+                    <button type="submit" class="btn btn-primary">Adicionar</button>
+                </form>
+            </section>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+<!-- end card -->
+{% endblock %}
+
+{% block extrajavascript %}
+    <script src="/static/libs/select2/js/select2.min.js"></script>
+    <script>$('.card select').select2();</script>
+    <script src="{% static 'js/document_behavior.js' %}"></script>
+
+    {% if user.is_client %}
+    <script>
+        $(function () {
+            const options = {
+                typeEl: $('[name="{{ profile_form.id_registry_type.html_name }}"]'),
+                documentEl: $('[name="{{ profile_form.id_registry.html_name }}"]'),
+                nameEl: $('[name="{{ user_form.first_name.html_name }}"]'),
+                socialNameEl: $('[name="{{ profile_form.social_name.html_name }}"]'),
+            };
+            setupDocumentTypeBehavior(options);
+            updateDocumentType(options);
+        })
+
+        $(function (){
+            let checkBox = document.querySelector("#societyProfileCheckbox")
+            let address = document.querySelector("#societyProfile")
+            setupAddressCheckbox(checkBox, address)
+        })
+
+        $(function (){
+            let checkBox = document.querySelector("#id_profile_form-digital")
+            let address = document.querySelector("#address")
+            setupAddressCheckbox(checkBox, address)
+        })
+    </script>
+    {% endif %}
+{% endblock %}

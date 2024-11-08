@@ -1,0 +1,42 @@
+{% extends 'partial/card_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block card_content %}
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title">Alterar imagens</h2>
+
+      <form id="document_form" method="POST" enctype="multipart/form-data" action="">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="mb-3">
+              {{form.name|as_crispy_field}}
+            </div>
+            <div class="mb-3">
+              {{form.logo_icon|as_crispy_field}}
+            </div>
+            <div class="mb-3">
+              {{form.logo|as_crispy_field}}
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="mb-3">
+              {{form.logo_small|as_crispy_field}}
+            </div>
+            <div class="mb-3">
+              {{form.logo_dark|as_crispy_field}}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends "partial/card_base.html" %}
+
+{% block title %}Grupos{% endblock %}
+
+{% block lead %}{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb m-0">
+    <li class="breadcrumb-item"><a href="javascript: void(0);">Grupos</a></li>
+    <li class="breadcrumb-item active">Listagem</li>
+</ol>
+{% endblock %}
+
+{% block card_content %}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title mb-4">Lista de Grupos</h4>
+        {% if perms.auth.add_group %}
+        <a href="{% url 'groups:create' %}" class="btn btn-success waves-effect waves-light">
+            Adicionar
+        </a>
+        {% endif %}
+        <br />
+        <br />
+        <div class="table-responsive">
+            <table class="table table-bordered text-nowrap border-bottom responsive-datatable">
+                <thead>
+                    <tr>
+                        <th style="width: 20px;">
+                            <div class="form-check font-size-16">
+                                <input type="checkbox" class="form-check-input" id="customCheck1">
+                                <label class="form-check-label" for="customCheck1">&nbsp;</label>
+                            </div>
+                        </th>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Deletável</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for group in groups %}
+                    <tr>
+                        <td>
+                            <div class="form-check font-size-16">
+                                <input type="checkbox" class="form-check-input" id="customCheck2">
+                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                            </div>
+                        </td>
+                        <td><a href="javascript: void(0);" class="text-body fw-bold">{{group.pk}}</a> </td>
+                        <td>{{group.name}}</td>
+                        <td>{{group.description}}</td>
+                        <td>{{group.user_id|yesno:"Sim,Não"}}</td>
+                        <td>
+                            <div>
+                                {% if perms.auth.view_group %}
+                                <a href="{% url 'groups:detail' group.pk %}" class="btn btn-primary btn-sm">
+                                    Ver Detalhes
+                                </a>
+                                {% endif %}
+                                {% if perms.auth.change_group %}
+                                <a href="{% url 'groups:edit' group.pk %}" class="btn btn-warning btn-sm">
+                                    Editar
+                                </a>
+                                {% endif %}
+                                {% if perms.auth.delete_group %}
+                                <a href="{% url 'groups:remove' group.pk %}" class="btn btn-danger btn-sm">
+                                    Remover
+                                </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- end table-responsive -->
+    </div>
+</div>
+<!-- end card -->
+{% endblock %}

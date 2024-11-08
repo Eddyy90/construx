@@ -1,0 +1,83 @@
+{% extends "partial/clean_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Log In{% endblock %}
+{% block body_class %}background-auth{% endblock %}
+{% block content %}
+<div class="container-login100">
+    <div class="wrap-login100 p-6">
+        <form action="{% url 'login' %} " method="POST" class="login100-form validate-form">
+            {% csrf_token %}
+            <span class="login100-form-title pb-5">
+                Login
+            </span>
+            <div class="text-center mt-2">
+                <h5 class="text-primary">Bem-vindo</h5>
+                <p class="text-muted">Faça login para continuar</p>
+            </div>
+            {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                <strong>{{message}}</strong>
+            </div>
+            {% endfor %}
+            <div class="panel panel-primary">
+                <div class="panel-body tabs-menu-body p-0 pt-5">
+                    <div>
+                        <div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
+                            <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
+                                <i class="zmdi zmdi-email text-muted" aria-hidden="true"></i>
+                            </a>
+                            <input id="{{ form.login.id }}" name="{{ form.login.name }}" class="input100 border-start-0 form-control ms-0" type="email" placeholder="Endereço de e-mail" value="{{ form.login.value|default_if_none:'' }}" autocomplete="email" maxlength="320">
+                        </div>
+                        <div class="wrap-input100 validate-input input-group" id="Password-toggle">
+                            <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
+                                <i class="zmdi text-muted zmdi-eye-off" aria-hidden="true"></i>
+                            </a>
+                            <input id="password" type="password" name="password" class="input100 border-start-0 form-control ms-0" type="text" placeholder="Insira a senha">
+                        </div>
+                        <div class="mb-3">
+                            {{ form.remember | as_crispy_field}}
+                        </div>
+                    </div>
+
+                    {% comment %}
+                    <div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
+                        <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
+                            <i class="zmdi zmdi-email text-muted" aria-hidden="true"></i>
+                        </a>
+                        <input class="input100 border-start-0 form-control ms-0" type="email" placeholder="Email">
+                    </div>
+                    <div class="wrap-input100 validate-input input-group" id="Password-toggle">
+                        <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
+                            <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
+                        </a>
+                        <input class="input100 border-start-0 form-control ms-0" type="password" placeholder="Password">
+                    </div>
+                    {% endcomment %}
+
+                    <div class="text-end pt-4">
+                        <p class="mb-0"><a href="{% url 'account_reset_password' %}" class="text-primary ms-1">Esqueceu a senha?</a></p>
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+                        <button  class="login100-form-btn btn-primary">Entrar</button>
+                    </div>
+
+                    {% comment %}
+                    <div class="text-center pt-3">
+                        <p class="text-dark mb-0"> Não tem conta? <a href="{% url 'register' %}" class="text-primary ms-1">Crie agora</a></p>
+                    </div>
+
+                    <div class="text-center pt-3">
+                        <p class="text-dark mb-0"> Dúvidas? <a href="#" class="text-primary ms-1" target="_blank">Contate-nos</a></p>
+                    </div>
+                    {% endcomment %}
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

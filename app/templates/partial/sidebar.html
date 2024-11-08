@@ -1,0 +1,112 @@
+{% load static %}
+{% block sidebar %}
+
+<!--APP-SIDEBAR-->
+<div>
+    <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
+    <div class="app-sidebar">
+        <div class="side-header">
+            <a class="header-brand1" href="{% url 'index' %}">
+                <img src="../assets/images/brand/logo.png" class="header-brand-img desktop-logo" alt="logo">
+                <img src="../assets/images/brand/logo-1.png" class="header-brand-img toggle-logo" alt="logo">
+                <img src="{{ branding.logo_small }}" class="header-brand-img light-logo" alt="logo">
+                <img src="{{ branding.logo }}" class="header-brand-img light-logo1" alt="logo">
+            </a>
+            <!-- LOGO -->
+        </div>
+        <div class="main-sidemenu">
+            <div class="slide-left disabled" id="slide-left">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z" />
+                </svg>
+            </div>
+
+            <ul class="side-menu">
+                <li class="sub-category">
+                    <h3>Menu</h3>
+                </li>
+
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="{% url 'index' %}">
+                        <i class="side-menu__icon fe fe-home"></i>
+                        <span class="side-menu__label">Dashboard</span>
+                    </a>
+                </li>
+            {% if request.is_public %}
+                {% if request.user.is_admin %}
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="{% url 'clients:index' %}">
+                        <i class="side-menu__icon fe fe-user"></i>
+                        <span class="side-menu__label">Clientes</span>
+                    </a>
+                </li>
+                {% endif %}
+            {% else %}
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="{% url 'calendars:fullcalendar' %}">
+                        <i class="side-menu__icon bi bi-calendar"></i>
+                        <span class="side-menu__label">Calendário</span>
+                        <i class="angle fe fe-chevron-right"></i>
+                    </a>
+                    <ul class="slide-menu">
+                        <li><a href="{% url 'calendars:list' %}" class="slide-item">Eventos</a></li>
+                    </ul>
+                    </a>
+                    <ul class="slide-menu">
+                        <li><a href="{% url 'calendars:fullcalendar' %}" class="slide-item">Calendário</a></li>
+                    </ul>
+                </li>
+                {% if perms.users.view_user %}
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0)">
+                        <i class="side-menu__icon fe fe-user"></i>
+                        <span class="side-menu__label">Usuários</span>
+                        <i class="angle fe fe-chevron-right"></i>
+                    </a>
+                    <ul class="slide-menu">
+                        {% if perms.users.view_user %}
+                        <li><a href="{% url 'users:index' %}" class="slide-item">Usuários</a></li>
+                        {% endif %}
+                        {% if perms.auth.view_group %}
+                        <li><a href="{% url 'groups:index' %}" class="slide-item">Grupos</a></li>
+                        {% endif %}
+                        {% if perms.auth.view_vet %}
+                        <li><a href="{% url 'vets:list' %}" class="slide-item">Veterinários</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                {% endif %}
+                {% if perms.user_notifications.view_usernotification %}
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="{% url 'user_notifications:list' %}">
+                        <i class="side-menu__icon fe fe-bell"></i>
+                        <span class="side-menu__label">Notificações</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if perms.animals.view_animal %}
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="{% url 'animals:list' %}">
+                        <i class="side-menu__icon fe fe-clipboard"></i>
+                        <span class="side-menu__label">Animais</span>
+                    </a>
+                </li>
+                {% endif %}
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="{% url 'support' %}">
+                        <i class="side-menu__icon fe fe-life-buoy"></i>
+                        <span class="side-menu__label">Suporte</span>
+                    </a>
+                </li>
+            {% endif %}
+            </ul>
+            <div class="slide-right" id="slide-right">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" />
+                </svg>
+            </div>
+        </div>
+    </div>
+    <!--/APP-SIDEBAR-->
+</div>
+{% endblock %}

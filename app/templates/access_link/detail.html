@@ -1,0 +1,22 @@
+{% extends "partial/card_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Detalhe Link de Acesso{% endblock %}
+
+{% block lead %}Detalhe de Link de Acesso{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block card_content %}
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title mb-4">{{ object.name }}</h4>
+        <p><a href="{{ object.file.url }}" class="btn btn-info" target="_blank">Baixar</a></p>
+        <p>Descrição: {{ object.description }}</p>
+        <p>Hash: {{ object.hash }}</p>
+        <p>Criado em: {{ object.created_at|date }}</p>
+        <p>Atualizado em: {{ object.updated_at|date }}</p>
+
+    </div>
+</div>
+{% endblock %}

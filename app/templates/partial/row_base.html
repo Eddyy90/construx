@@ -1,0 +1,31 @@
+{% extends "partial/default_base.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+            <div class="main-content app-content mt-0">
+                <div class="side-app page-content">
+                    <div class="container-fluid">
+
+                        <!-- PAGE-HEADER -->
+                        <div class="page-header">
+                            <h1 class="page-title">{% block lead %}{% endblock %}</h1>
+                            <div>
+                                {% block breadcrumb %}{% endblock %}
+                            </div>
+                        </div>
+                        <!-- PAGE-HEADER END -->
+
+                        <div class="row alert-messages">
+                            <div class="col-12">
+                                {% include 'partial/messages.html' %}
+                            </div>
+                        </div>
+
+                        {% block row_content %}
+                        {% endblock %}
+                    </div> <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+            </div>
+{% endblock %}

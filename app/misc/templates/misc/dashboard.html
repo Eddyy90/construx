@@ -1,0 +1,212 @@
+{% extends "partial/row_base.html" %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block lead %}Dashboard{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="javascript:void(0)">Menu</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+</ol>
+{% endblock %}
+
+{% block row_content %}
+    <!-- ROW-2 -->
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Movimentação de Documentos</h3>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex mx-auto text-center justify-content-center mb-4">
+                        <div class="d-flex text-center justify-content-center me-3"><span class="dot-label bg-primary my-auto"></span>Documentos Iniciados</div>
+                        <div class="d-flex text-center justify-content-center"><span class="dot-label bg-secondary my-auto"></span>Documentos Finalizados</div>
+                    </div>
+                    <div class="chartjs-wrapper-demo">
+                        <canvas id="transactions" class="chart-dropshadow"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- COL END -->
+    </div>
+    <!-- ROW-2 END -->
+
+    <!-- Últimos Documentos -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Últimos Documentos</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-nowrap border-bottom responsive-datatable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">
+                                        <div class="form-check font-size-16">
+                                            <input type="checkbox" class="form-check-input" id="customCheck1">
+                                            <label class="form-check-label" for="customCheck1">&nbsp;</label>
+                                        </div>
+                                    </th>
+                                    <th>Id</th>
+                                    <th>Interessado</th>
+                                    <th>Data</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for document in document_list %}
+                                    <tr>
+                                        <td>
+                                            <div class="form-check font-size-16">
+                                                <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                            </div>
+                                        </td>
+                                        <td><a class="text-body fw-bold">#DOC{{ document.id }}</a></td>
+                                        <td>
+                                            {% for claimant in document.claimants.all %}
+                                                {{ claimant.name }}
+                                            {% empty %}
+                                                -
+                                            {% endfor %}
+                                        </td>
+                                        <td><a class="text-body fw-bold">{{ document.created_at }}</a></td>
+                                        <td><a class="text-body fw-bold">{{ document.get_status_display }}</a></td>
+                                        <td>
+                                            <a href="{% url 'document:fill' document.id %}" class="btn btn-primary btn-sm btn-rounded waves-effect waves-light">Ver Detalhes</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- end table-responsive -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Últimos Documentos END -->
+
+    <!-- Documentos em Atraso -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Documentos em Atraso</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered text-nowrap border-bottom responsive-datatable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;">
+                                        <div class="form-check font-size-16">
+                                            <input type="checkbox" class="form-check-input" id="customCheck1">
+                                            <label class="form-check-label" for="customCheck1">&nbsp;</label>
+                                        </div>
+                                    </th>
+                                    <th>Id</th>
+                                    <th>Descrição</th>
+                                    <th>Data</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for document in late_documents %}
+                                    <tr>
+                                        <td>
+                                            <div class="form-check font-size-16">
+                                                <input type="checkbox" class="form-check-input" id="customCheck2">
+                                                <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                            </div>
+                                        </td>
+                                        <td><a class="text-body fw-bold">#{{ document.id }}</a></td>
+                                        <td><a class="text-body fw-bold">{{ document.description}}</a></td>
+                                        <td><a class="text-body fw-bold">{{ document.document_moves.last.due_date }}</a></td>
+                                        <td>
+                                            {% if document.document_moves.last.due_date <= today %}
+                                                <span class="badge bg-danger font-size-12" style="font-weight: bold; font-size: 14px;">No Prazo</span>
+                                            {% else %}
+                                            <span class="badge bg-danger font-size-12" style="font-weight: bold; font-size: 14px;">Atrasado</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- end table-responsive -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Documentos em Atraso END -->
+
+
+<!-- Últimos Requerimentos Públicos -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">Últimas Requisições Públicas</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered text-nowrap border-bottom responsive-datatable">
+                        <thead>
+                            <tr>
+                                <th style="width: 20px;">
+                                    <div class="form-check font-size-16">
+                                        <input type="checkbox" class="form-check-input" id="customCheck1">
+                                        <label class="form-check-label" for="customCheck1">&nbsp;</label>
+                                    </div>
+                                </th>
+                                <th>Id</th>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                                <th>Categoria</th>
+                                <th>Requerimento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for requisition in last_requisitions%}
+                                <tr>
+                                    <td>
+                                        <div class="form-check font-size-16">
+                                            <input type="checkbox" class="form-check-input" id="customCheck2">
+                                            <label class="form-check-label" for="customCheck2">&nbsp;</label>
+                                        </div>
+                                    </td>
+                                    <td><a class="text-body fw-bold">#{{ requisition.id }}</a></td>
+                                    <td>{{ requisition.name }}</td>
+                                    <td>{{ requisition.email }}</td>
+                                    <td>
+                                        <span class="phone-number">{{ requisition.phone_number }}</span>
+                                    </td>
+                                    <td>{{ requisition.get_category_display }}</td>
+                                    <td>
+                                        <a target="_blank" href="{% url 'document:print' requisition.document.id %}" class="btn btn-success btn-sm btn-rounded waves-effect waves-light">
+                                            Imprimir
+                                        </a>
+                                    </td>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrajavascript %}
+    <script>
+        $(document).ready(function() {
+            $('.phone-number').inputmask('(99) 99999-9999');
+        });
+    </script>
+{% endblock %}

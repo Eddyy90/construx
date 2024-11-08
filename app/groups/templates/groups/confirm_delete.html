@@ -1,0 +1,40 @@
+{% extends "partial/card_base.html" %}
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% block title %}Remover Documento{% endblock %}
+
+{% block lead %}{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block row_content %}
+<div class="row justify-content-center">
+    <div class="col-xl-3 col-sm-6">
+        <div class="card border p-0 pb-3">
+            <div class="card-header">
+                <h3 class="card-title">Remover Grupo</h3>
+            </div>
+            <form id="user-form" method="POST" action="">
+                {% csrf_token %}
+                <div class="card-body text-center">
+                    <span class=""></span>
+                    <img src="{% static '/images/svg/warning.svg' %}" alt="My Happy SVG" />
+
+                    <h4 class="h4 mb-0 mt-3">Cuidado</h4>
+                    <p class="card-text">Tem certeza que deseja remover <strong>{{ object }}</strong>?</p>
+                </div>
+                <div class="card-footer text-center border-0 pt-0">
+                    <div class="row">
+                        <div class="text-center">
+                            <a href="{% url 'groups:index' %}" class="btn btn-white me-2">Cancelar</a>
+                            <button type="submit" class="btn btn-danger">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

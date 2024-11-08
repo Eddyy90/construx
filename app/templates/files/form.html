@@ -1,0 +1,47 @@
+{% extends "partial/card_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Formulário - Documento{% endblock %}
+
+{% block lead %}{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block card_content %}
+<div class="card">
+    <div class="card-body">
+
+        {% if form.instance.pk %}
+        <h4 class="card-title mb-4">Editar Documento</h4>
+        {% else %}
+        <h4 class="card-title mb-4">Cadastrar Documento</h4>
+        {% endif %}
+
+        <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{form.name|as_crispy_field}}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{form.description|as_crispy_field}}
+                    </div>
+                </div>
+                {% if not form.instance.pk %}
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        {{form.file|as_crispy_field}}
+                        <small class="form-text text-muted">O tamanho máximo de arquivo é 50Mb</small>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

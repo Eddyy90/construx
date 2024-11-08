@@ -1,0 +1,77 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8" />
+    <title>{% block title %}{% endblock %} | {{ branding.name }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Atendimento Clínica" />
+    <!-- FAVICON -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '/assets/images/brand/favicon.ico' %}" />
+
+    {% block css %}
+		{% include 'partial/css.html' %}
+    {% endblock %}
+</head>
+
+<body class="app sidebar-mini ltr">
+
+    <!-- BACKGROUND-IMAGE -->
+    <div class="login-img">
+
+        <!-- GLOABAL LOADER -->
+        <div id="global-loader">
+            <img src="{% static '/assets/images/loader.svg' %}" class="loader-img" alt="Loader">
+        </div>
+        <!-- /GLOABAL LOADER -->
+
+        <!-- PAGE -->
+        <div class="page">
+            {% block base_content %}
+            <div class="">
+
+                <!-- CONTAINER OPEN -->
+                <div class="col col-login mx-auto mt-7">
+                    <div class="text-center">
+                        <img src="{% static '/images/brand/logo-white.png' %}" class="header-brand-img" alt="">
+                    </div>
+                </div>
+
+                {% block content %}
+                {% endblock %}
+            </div>
+            {% endblock %}
+        </div>
+        <!-- End PAGE -->
+
+    </div>
+    <!-- BACKGROUND-IMAGE CLOSED -->
+
+    <!-- JQUERY JS -->
+    <script src="{% static '/assets/js/jquery.min.js' %}"></script>
+
+    <!-- BOOTSTRAP JS -->
+    <script src="{% static '/assets/plugins/bootstrap/js/popper.min.js' %}"></script>
+    <script src="{% static '/assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+
+    <!-- SHOW PASSWORD JS -->
+    <script src="{% static '/assets/js/show-password.min.js' %}"></script>
+
+    <!-- GENERATE OTP JS -->
+    <script src="{% static '/assets/js/generate-otp.js' %}"></script>
+
+    <!-- Perfect SCROLLBAR JS-->
+    <script src="{% static '/assets/plugins/p-scroll/perfect-scrollbar.js' %}"></script>
+
+    <!-- Color Theme js -->
+    <script src="{% static '/assets/js/themeColors.js' %}"></script>
+
+    <!-- CUSTOM JS -->
+    <script src="{% static '/assets/js/custom.js' %}"></script>
+
+    {% block extrajavascript %}{% endblock %}
+
+</body>
+
+</html>
