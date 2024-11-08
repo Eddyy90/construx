@@ -1,0 +1,61 @@
+version: "3.3"
+
+services:
+  redis:
+    image: redis:latest
+    command: bash -c "redis-server --appendonly yes"
+    volumes:
+      - ./cache:/data
+  db:
+    image: postgres:15-bullseye
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./data/rabbitmq:/var/lib/rabbitmq
+  web:
+    restart: always
+    build: ./app/
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      - DATABASE_IP=db
+      - REDIS_IP=redis
+      - RABBITMQ_IP=rabbitmq
+    volumes:
+      - ./app:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+  worker:
+   build:
+     context: ./app/
+     dockerfile: worker.Dockerfile
+   depends_on:
+     - redis
+     - rabbitmq
+     - db
+   volumes:
+     - ./app:/code
+   environment:
+     - DATABASE_IP=db
+     - REDIS_IP=redis
+     - RABBITMQ_IP=rabbitmq

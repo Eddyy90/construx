@@ -1,0 +1,10 @@
+extend-exclude = ["**/migrations/*"]
+[lint]
+# Skip Single quotes found but double quotes preferred.
+ignore = ["Q000"]
+extend-select = ["I", "COM819"]
+
+
+[format]
+# Do not strict quotes usage for non-triple-quoted strings.
+quote-style = "preserve"
