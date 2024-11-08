@@ -77,6 +77,7 @@ TENANT_APPS = [
     'user_notifications',
     'calendars',
     'schedule',
+    'works',
 ]
 
 INSTALLED_APPS = [
@@ -105,6 +106,7 @@ INSTALLED_APPS = [
     'user_notifications',
     'calendars',
     'schedule',
+    'works',
     # 'construx.setup.SetupConfig'
 ]
 

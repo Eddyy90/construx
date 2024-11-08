@@ -71,7 +71,7 @@ class ClientSettings(models.Model):
         Client, on_delete=models.CASCADE,
         primary_key=True, related_name='settings'
     )
-    name = models.CharField(max_length=255)
+    name = models.CharField(blank=True, max_length=255)
     logo = models.ImageField(upload_to=client_file_directory_path, null=True, blank=True)
     logo_dark = models.ImageField(upload_to=client_file_directory_path, null=True, blank=True)
     logo_small = models.ImageField(upload_to=client_file_directory_path, null=True, blank=True)

@@ -1,12 +1,12 @@
 {% extends "partial/card_base.html" %}
 
-{% block title %}Animais{% endblock %}
+{% block title %}Obras{% endblock %}
 
 {% block lead %}{% endblock %}
 
 {% block breadcrumb %}
 <ol class="breadcrumb m-0">
-    <li class="breadcrumb-item"><a href="{% url 'animals:list' %}">Animais</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'works:list' %}">Obras</a></li>
     <li class="breadcrumb-item active">Listagem</li>
 </ol>
 {% endblock %}
@@ -14,10 +14,10 @@
 {% block card_content %}
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Lista de Animais</h3>
+        <h3 class="card-title">Lista de Obras</h3>
         <div class="card-header-actions ms-auto">
-            {% if perms.animals.add_animal %}
-            <a href="{% url 'animals:create' %}" class="btn btn-sm btn-success">
+            {% if perms.works.add_work %}
+            <a href="{% url 'works:create' %}" class="btn btn-sm btn-success">
                 Adicionar
             </a>
             {% endif %}
@@ -35,28 +35,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for animal in animals %}
+                    {% for work in works %}
                     <tr>
                         <td>
-                            <a href="{% url 'animals:detail' animal.pk %}" class="text-body fw-bold">{{animal.pk}}</a>
+                            <a href="{% url 'works:detail' work.pk %}" class="text-body fw-bold">{{work.pk}}</a>
                         </td>
-                        <td>{{animal.name}}</td>
-                        <td>{{animal.description}}</td>
+                        <td>{{work.name}}</td>
+                        <td>{{work.description}}</td>
                         <td>
                             <div>
 
-                            {% if perms.animals.view_animal %}
-                            <a href="{% url 'animals:detail' animal.pk %}" class="btn btn-primary btn-sm">
+                            {% if perms.works.view_work %}
+                            <a href="{% url 'works:detail' work.pk %}" class="btn btn-primary btn-sm">
                                 Ver Detalhes
                             </a>
                             {% endif %}
-                            {% if perms.animals.change_animal %}
-                            <a href="{% url 'animals:edit' animal.pk %}" class="btn btn-warning btn-sm">
+                            {% if perms.works.change_work %}
+                            <a href="{% url 'works:edit' work.pk %}" class="btn btn-warning btn-sm">
                                 Editar
                             </a>
                             {% endif %}
-                            {% if perms.animals.delete_animal %}
-                            <a href="{% url 'animals:remove' animal.pk %}" class="btn btn-danger btn-sm">
+                            {% if perms.works.delete_work %}
+                            <a href="{% url 'works:remove' work.pk %}" class="btn btn-danger btn-sm">
                                 Remover
                             </a>
                             {% endif %}

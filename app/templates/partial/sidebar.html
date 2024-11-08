@@ -32,6 +32,14 @@
                         <span class="side-menu__label">Dashboard</span>
                     </a>
                 </li>
+                {% if perms.works.view_work %}
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="{% url 'works:list' %}">
+                        <i class="side-menu__icon fe fe-layers"></i>
+                        <span class="side-menu__label">Obras</span>
+                    </a>
+                </li>
+                {% endif %}
             {% if request.is_public %}
                 {% if request.user.is_admin %}
                 <li class="slide">
@@ -70,9 +78,6 @@
                         {% if perms.auth.view_group %}
                         <li><a href="{% url 'groups:index' %}" class="slide-item">Grupos</a></li>
                         {% endif %}
-                        {% if perms.auth.view_vet %}
-                        <li><a href="{% url 'vets:list' %}" class="slide-item">Veterinários</a></li>
-                        {% endif %}
                     </ul>
                 </li>
                 {% endif %}
@@ -81,14 +86,6 @@
                     <a class="side-menu__item" data-bs-toggle="slide" href="{% url 'user_notifications:list' %}">
                         <i class="side-menu__icon fe fe-bell"></i>
                         <span class="side-menu__label">Notificações</span>
-                    </a>
-                </li>
-                {% endif %}
-                {% if perms.animals.view_animal %}
-                <li class="slide">
-                    <a class="side-menu__item" data-bs-toggle="slide" href="{% url 'animals:list' %}">
-                        <i class="side-menu__icon fe fe-clipboard"></i>
-                        <span class="side-menu__label">Animais</span>
                     </a>
                 </li>
                 {% endif %}

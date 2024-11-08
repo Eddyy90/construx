@@ -6,23 +6,23 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.utils.html import mark_safe
 
-from .models import Animal
-from animals.forms import AnimalForm
+from .models import Work
+from works.forms import WorkForm
 
 
-class AnimalListView(PermissionRequiredMixin, ListView):
-    permission_required = 'animals.view_animal'
-    model = Animal
-    context_object_name = 'animals'
-    template_name = 'animals/list.html'
+class WorkListView(PermissionRequiredMixin, ListView):
+    permission_required = 'works.view_work'
+    model = Work
+    context_object_name = 'works'
+    template_name = 'works/list.html'
 
 
-class AnimalCreateView(PermissionRequiredMixin, CreateView):
-    permission_required = 'animals.add_animal'
-    model = Animal
-    form_class = AnimalForm
-    template_name = 'animals/form.html'
-    success_url = reverse_lazy('animals:list')
+class WorkCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = 'works.add_work'
+    model = Work
+    form_class = WorkForm
+    template_name = 'works/form.html'
+    success_url = reverse_lazy('works:list')
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -30,7 +30,7 @@ class AnimalCreateView(PermissionRequiredMixin, CreateView):
             self.object.created_by = self.request.user
         self.object.save()
         form.save_m2m()
-        message = mark_safe(f'Animal <strong>{self.object}</strong> criado com sucesso')
+        message = mark_safe(f'Obra <strong>{self.object}</strong> criado com sucesso')
         messages.success(self.request, message)
         return HttpResponseRedirect(self.get_success_url())
 
@@ -42,22 +42,22 @@ class AnimalCreateView(PermissionRequiredMixin, CreateView):
         return super().form_invalid(form)
 
 
-class AnimalDetailView(PermissionRequiredMixin, DetailView):
-    permission_required = 'animals.view_animal'
-    model = Animal
-    template_name = 'animals/detail.html'
+class WorkDetailView(PermissionRequiredMixin, DetailView):
+    permission_required = 'works.view_work'
+    model = Work
+    template_name = 'works/detail.html'
 
 
-class AnimalUpdateView(PermissionRequiredMixin, UpdateView):
-    permission_required = 'animals.change_animal'
-    model = Animal
-    form_class = AnimalForm
-    template_name = 'animals/form.html'
-    success_url = reverse_lazy('animals:list')
+class WorkUpdateView(PermissionRequiredMixin, UpdateView):
+    permission_required = 'works.change_work'
+    model = Work
+    form_class = WorkForm
+    template_name = 'works/form.html'
+    success_url = reverse_lazy('works:list')
 
     def form_valid(self, form):
         instance = form.save(commit=True)
-        message = mark_safe(f'Animal <strong>{instance}</strong> editado com sucesso')
+        message = mark_safe(f'Obra <strong>{instance}</strong> editado com sucesso')
         messages.success(self.request, message)
         return HttpResponseRedirect(self.get_success_url())
 
@@ -69,8 +69,8 @@ class AnimalUpdateView(PermissionRequiredMixin, UpdateView):
         return super().form_invalid(form)
 
 
-class AnimalDeleteView(PermissionRequiredMixin, DeleteView):
-    permission_required = 'animals.delete_animal'
-    model = Animal
-    template_name = 'animals/confirm_delete.html'
-    success_url = reverse_lazy('animals:list')
+class WorkDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = 'works.delete_work'
+    model = Work
+    template_name = 'works/confirm_delete.html'
+    success_url = reverse_lazy('works:list')

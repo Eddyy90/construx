@@ -23,6 +23,7 @@ urlpatterns = [
     path('user_notifications/', include('user_notifications.urls')),
     path('calendars/', include('calendars.urls')),
     path('schedule/', include('schedule.urls')),
+    path('works/', include('works.urls')),
 ]
 
 

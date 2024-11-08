@@ -1,6 +1,6 @@
 from ninja_extra import api_controller
 from ninja_jwt.authentication import AsyncJWTAuth
-from .models import Animal
+from .models import Work
 from ninja_extra import permissions, api_controller
 from ninja_extra import (
     ModelConfig,
@@ -17,27 +17,27 @@ class HasPermission(permissions.BasePermission):
         url_name = request.resolver_match.url_name
 
         if url_name.endswith("-create"):
-            return request.user.has_perm('animals.add_animal')
+            return request.user.has_perm('works.add_work')
 
         if url_name.endswith("-list"):
-            return request.user.has_perm('animals.view_animal')
+            return request.user.has_perm('works.view_work')
 
         if url_name.endswith("-update"):
-            return request.user.has_perm('animals.change_animal')
+            return request.user.has_perm('works.change_work')
 
         if url_name.endswith("-partial-update"):
-            return request.user.has_perm('animals.change_animal')
+            return request.user.has_perm('works.change_work')
 
         if url_name.endswith("-delete"):
-            return request.user.has_perm('animals.delete_animal')
+            return request.user.has_perm('works.delete_work')
 
         return request.method in permissions.SAFE_METHODS
 
 
-@api_controller("/animals", auth=AsyncJWTAuth(), permissions=[permissions.IsAuthenticated & HasPermission])
-class AnimalModelController(ModelControllerBase):
+@api_controller("/works", auth=AsyncJWTAuth(), permissions=[permissions.IsAuthenticated & HasPermission])
+class WorkModelController(ModelControllerBase):
     model_config = ModelConfig(
-        model=Animal,
+        model=Work,
         async_routes=True,
         schema_config=ModelSchemaConfig(
             read_only_fields=["id"],

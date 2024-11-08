@@ -1,13 +1,13 @@
 {% extends "partial/card_base.html" %}
 {% load crispy_forms_tags %}
 
-{% block title %}Detalhes de Animal{% endblock %}
+{% block title %}Detalhes de Obra{% endblock %}
 
 {% block lead %}{% endblock %}
 
 {% block breadcrumb %}
 <ol class="breadcrumb m-0">
-    <li class="breadcrumb-item"><a href="{% url 'animals:list' %}">Animais</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'works:list' %}">Obras</a></li>
     <li class="breadcrumb-item active">{{ object }}</li>
 </ol>
 {% endblock %}
@@ -17,8 +17,8 @@
     <div class="card-header">
         <h3 class="card-title">{{ object }}</h3>
         <div class="card-header-actions ms-auto">
-            {% if perms.animals.change_animal %}
-            <a href="{% url 'animals:edit' animal.pk %}" class="btn btn-sm btn-warning">
+            {% if perms.works.change_work %}
+            <a href="{% url 'works:edit' work.pk %}" class="btn btn-sm btn-warning">
                 Editar
             </a>
             {% endif %}
