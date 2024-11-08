@@ -1,0 +1,45 @@
+{% extends "partial/card_base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Remover Pagamento{% endblock %}
+
+{% block lead %}{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb m-0">
+    <li class="breadcrumb-item"><a href="{% url 'payments:list' %}">Pagamentos</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'payments:detail' payment.pk %}">{{ object }}</a></li>
+    <li class="breadcrumb-item active">Remover</li>
+</ol>
+{% endblock %}
+
+{% block row_content %}
+<div class="row justify-content-center">
+    <div class="col-xl-3 col-sm-6">
+        <div class="card border p-0 pb-3">
+            <div class="card-header">
+                <h3 class="card-title">Remover Pagamento</h3>
+            </div>
+            <form id="user-form" method="POST" action="">
+                {% csrf_token %}
+                <div class="card-body text-center">
+                    <span class=""></span>
+                    <img src="{% static '/images/svg/warning.svg' %}" alt="Warning icon" />
+
+                    <h4 class="h4 mb-0 mt-3">Cuidado</h4>
+                    <p class="card-text">Tem certeza que deseja remover <strong>{{ object }}</strong>?</p>
+                </div>
+                <div class="card-footer text-center border-0 pt-0">
+                    <div class="row">
+                        <div class="text-center">
+                            <a href="{% url 'payments:list' %}" class="btn btn-white me-2">Cancelar</a>
+                            <button type="submit" class="btn btn-danger">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

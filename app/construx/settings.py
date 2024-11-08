@@ -78,6 +78,7 @@ TENANT_APPS = [
     'calendars',
     'schedule',
     'works',
+    'payments',
 ]
 
 INSTALLED_APPS = [
@@ -107,6 +108,7 @@ INSTALLED_APPS = [
     'calendars',
     'schedule',
     'works',
+    'payments',
     # 'construx.setup.SetupConfig'
 ]
 

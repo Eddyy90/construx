@@ -1,0 +1,74 @@
+{% extends "partial/card_base.html" %}
+
+{% block title %}Pagamentos{% endblock %}
+
+{% block lead %}{% endblock %}
+
+{% block breadcrumb %}
+<ol class="breadcrumb m-0">
+    <li class="breadcrumb-item"><a href="{% url 'payments:list' %}">Pagamentos</a></li>
+    <li class="breadcrumb-item active">Listagem</li>
+</ol>
+{% endblock %}
+
+{% block card_content %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Lista de Pagamentos</h3>
+        <div class="card-header-actions ms-auto">
+            {% if perms.payments.add_payment %}
+            <a href="{% url 'payments:create' %}" class="btn btn-sm btn-success">
+                Adicionar
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered text-nowrap border-bottom responsive-datatable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th style="width: 1%;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'payments:detail' payment.pk %}" class="text-body fw-bold">{{payment.pk}}</a>
+                        </td>
+                        <td>{{payment.name}}</td>
+                        <td>{{payment.description}}</td>
+                        <td>
+                            <div>
+
+                            {% if perms.payments.view_payment %}
+                            <a href="{% url 'payments:detail' payment.pk %}" class="btn btn-primary btn-sm">
+                                Ver Detalhes
+                            </a>
+                            {% endif %}
+                            {% if perms.payments.change_payment %}
+                            <a href="{% url 'payments:edit' payment.pk %}" class="btn btn-warning btn-sm">
+                                Editar
+                            </a>
+                            {% endif %}
+                            {% if perms.payments.delete_payment %}
+                            <a href="{% url 'payments:remove' payment.pk %}" class="btn btn-danger btn-sm">
+                                Remover
+                            </a>
+                            {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- end card -->
+{% endblock %}
+

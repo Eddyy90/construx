@@ -82,6 +82,14 @@
                 </li>
                 {% endif %}
                 {% if perms.user_notifications.view_usernotification %}
+                {% if perms.works.view_work %}
+                <li class="slide">
+                    <a class="side-menu__item" data-bs-toggle="slide" href="{% url 'payments:list' %}">
+                        <i class="side-menu__icon fe fe-dollar-sign"></i>
+                        <span class="side-menu__label">Pagamentos</span>
+                    </a>
+                </li>
+                {% endif %}
                 <li class="slide">
                     <a class="side-menu__item" data-bs-toggle="slide" href="{% url 'user_notifications:list' %}">
                         <i class="side-menu__icon fe fe-bell"></i>
